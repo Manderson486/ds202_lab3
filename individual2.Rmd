@@ -8,3 +8,34 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+## Part one
+
+```{r}
+library(tidyverse)
+data <- readxl::read_xls('~/ds202_lab3/GSS.xls')
+str(data)
+data$`Highest year of school completed` <- as.numeric(data$`Highest year of school completed`)
+data$`Age of respondent` <- as.numeric(data$`Age of respondent`)
+data$`R's age when 1st child born` <- as.numeric(data$`R's age when 1st child born`)
+data$`Number of children` <- as.numeric(data$`Number of children`)
+data <- data %>% na.omit
+str(data)
+```
+
+## Part two
+### Question 1
+
+```{r}
+mean(data$`Highest year of school completed`)
+```
+
+### Question 2
+
+```{r}
+
+```
+
+### Question 6
+```{r}
+
+```
