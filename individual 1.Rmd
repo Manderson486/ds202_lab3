@@ -1,28 +1,46 @@
 ---
-title: "Individual 1"
+git title: "Individual 1"
 output: html_document
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+install.packages('readxl')
+dat <- readxl::read_xls('GSS.xls')
+library(dplyr)
+library(ggplot2)
 ```
 
 ## R Markdown
+cleaning the data with Mario's code
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
+```{r}
+#the cleaning mario did
+data <- dat
+str(data)
+data$`Highest year of school completed` <- as.numeric(data$`Highest year of school completed`)
+data$`Age of respondent` <- as.numeric(data$`Age of respondent`)
+data$`R's age when 1st child born` <- as.numeric(data$`R's age when 1st child born`)
+data$`Number of children` <- as.numeric(data$`Number of children`)
+data <- data %>% na.omit
 ```
 
-## Including Plots
+## Problem 5
+```{r}
 
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
+str(data$`Marital status`)
+data$MarStatFact <- factor(data$`Marital status`, levels = c('Divorced','Married','Widowed','Never married','Separated', 'No answer'))
+ggplot(data, aes(x=`Highest year of school completed`))+geom_bar() + facet_wrap(~ MarStatFact )
+str(data)
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+```{r}
+ggplot(data, aes(x=`R's age when 1st child born`))+geom_bar()+facet_wrap(~ `Number of persons in household`, scales = 'free_y')
+
+data$numPerInHouse <- factor(data$`Number of persons in household`, 1:12 )
+str(data$numPerInHouse)
+ggplot(data, aes(x=`R's age when 1st child born`, fill = numPerInHouse))+geom_bar() #+facet_wrap(~ `Number of persons in household`, scales = 'free_y')
+ggplot(data, aes(x=`R's age when 1st child born`, fill = numPerInHouse))+geom_bar() +facet_wrap(~ `Number of persons in household`, scales = 'free_y')
+data(`R's age when 1st child born`)
+
+```
