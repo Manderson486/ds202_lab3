@@ -5,10 +5,23 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+data <- readxl::read_xls('GSS.xls')
+library(dplyr)
+library(ggplot2)
 ```
 
 ## Team Document
 ### Marcella Anderson, <boys put your names here>
+
+Data Cleaning
+```{r}
+#the cleaning mario did
+data$`Highest year of school completed` <- as.numeric(data$`Highest year of school completed`)
+data$`Age of respondent` <- as.numeric(data$`Age of respondent`)
+data$`R's age when 1st child born` <- as.numeric(data$`R's age when 1st child born`)
+data$`Number of children` <- as.numeric(data$`Number of children`)
+data <- data %>% na.omit
+```
 
 ### Problem 1
 
@@ -27,9 +40,41 @@ knitr::opts_chunk$set(echo = TRUE)
 
 
 ### Problem 5
+```{r}
 
+data$MarStatFact <- factor(data$`Marital status`, levels = c('Divorced','Married','Widowed','Never married','Separated', 'No answer'))
 
+ggplot(data, aes(x=`Highest year of school completed`))+geom_bar() + facet_wrap(~ MarStatFact )
+
+data %>% 
+  group_by(MarStatFact) %>%
+  summarize(mean_edu = mean(`Highest year of school completed`,na.rm=TRUE),
+            sd_edu = sd(`Highest year of school completed`,na.rm=TRUE)) %>%
+  arrange(mean_edu)
+```
+
+Though our graph shows similar curves of education for respondents of all marriage statuses, we can see in the averages that there is a slightly higher education level for divorced and married respondents than for the others. I found this very interesting. I would have thought that if there was any difference at all it would be noticed among widowed, separated, divorced, and married people compared to never married people. I do suspect that the reason widowed people have the lowest average education rate is usually widowed people are older. Education standards have increased over time, therefore it makes sense that there is a slight decrease in the number of educated participants of this category. 
 
 ### Problem 6
+
+#### Comparing the number of people in a household to the age when the first child is born
+```{r}
+
+data$numPerInHouse <- factor(data$`Number of persons in household`, 1:12 )
+
+ggplot(data, aes(x=`R's age when 1st child born`, fill = numPerInHouse))+geom_bar(color = 'black')+xlab("Age when First Child was Born")+ylab("count")+labs(fill = "Number of People in Household")+ggtitle("Age when First Child is Born by Number of People in Household")
+
+ggplot(data, aes(x=`R's age when 1st child born`))+geom_bar() +facet_wrap(~ `Number of persons in household`, scales = 'free_y')+ggtitle("Age when First Child was Born Separated by Number of People in Household")
+
+data %>%
+  group_by(numPerInHouse) %>%
+  summarize(mean_child = mean(`R's age when 1st child born`,na.rm=TRUE),
+            sd_child = sd(`R's age when 1st child born`,na.rm=TRUE))
+cor(x=data$`Number of persons in household`, y= data$`R's age when 1st child born`)
+```
+In comparing the year when the respondents first child was born and the number of persons in the household, we see there is very little correlation. In addition to this our graphs show that for people from each type of household the age when the first child is born follows a similar curve. In the colored chart we see very little shift in the graph based on the color of the bar, and in the grid of charts we see very little difference in the shape of the curves. In our data we see that the average age of the first born child is between 20 and 25 for all respondents. It is slightly lower for those in households with more than 6 people, but not by a large margin, and there is less data for these families as well which could impact the results. 
+
+
+
 
 
