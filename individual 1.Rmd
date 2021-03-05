@@ -5,7 +5,6 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-install.packages('readxl')
 dat <- readxl::read_xls('GSS.xls')
 library(dplyr)
 library(ggplot2)
@@ -28,19 +27,29 @@ data <- data %>% na.omit
 ## Problem 5
 ```{r}
 
-str(data$`Marital status`)
 data$MarStatFact <- factor(data$`Marital status`, levels = c('Divorced','Married','Widowed','Never married','Separated', 'No answer'))
+
 ggplot(data, aes(x=`Highest year of school completed`))+geom_bar() + facet_wrap(~ MarStatFact )
-str(data)
+
+data %>% 
+  group_by(MarStatFact) %>%
+  summarize(mean_edu = mean(`Highest year of school completed`,na.rm=TRUE),
+            sd_edu = sd(`Highest year of school completed`,na.rm=TRUE)) %>%
+  arrange(mean_edu)
 ```
 
+
+## Problem 6
 ```{r}
-ggplot(data, aes(x=`R's age when 1st child born`))+geom_bar()+facet_wrap(~ `Number of persons in household`, scales = 'free_y')
 
 data$numPerInHouse <- factor(data$`Number of persons in household`, 1:12 )
-str(data$numPerInHouse)
-ggplot(data, aes(x=`R's age when 1st child born`, fill = numPerInHouse))+geom_bar() #+facet_wrap(~ `Number of persons in household`, scales = 'free_y')
-ggplot(data, aes(x=`R's age when 1st child born`, fill = numPerInHouse))+geom_bar() +facet_wrap(~ `Number of persons in household`, scales = 'free_y')
-data(`R's age when 1st child born`)
 
+ggplot(data, aes(x=`R's age when 1st child born`, fill = numPerInHouse))+geom_bar(color = 'black')+xlab("Age when First Child was Born")+ylab("count")+labs(fill = "Number of People in Household")+ggtitle("Age when First Child is Born by Number of People in Household")
+
+ggplot(data, aes(x=`R's age when 1st child born`))+geom_bar() +facet_wrap(~ `Number of persons in household`, scales = 'free_y')+ggtitle("Age when First Child was Born Separated by Number of People in Household")
+
+data %>%
+  group_by(numPerInHouse) %>%
+  summarize(mean_child = mean(`R's age when 1st child born`,na.rm=TRUE),
+            sd_child = sd(`R's age when 1st child born`,na.rm=TRUE))
 ```
