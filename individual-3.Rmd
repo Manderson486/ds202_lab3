@@ -9,4 +9,80 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+install.packages("tidyverse")
+install.packages("dplyr")
+
+```{R}
+data <- readxl::read_xls('C:/Users/justi/Desktop/DS202/ds202_lab3/GSS.xls')
+
+data <- rename(data, 'Year'='Gss year for this respondent')
+data <- rename(data, 'Rent' = 'Does r own or rent home?')
+data <- rename(data, 'Happiness' = 'General happiness')
+data <- rename(data, 'Party' = 'Political party affiliation')
+data <- rename(data, 'Income'='Respondents income')
+data <- rename(data, 'People'='Number of persons in household')
+data <- rename(data, 'Sex' = 'Respondents sex')
+data <- rename(data, 'Major' = 'College major 1')
+data <- rename(data, 'Education'='Highest year of school completed')
+data <- rename(data, 'Parent.age'="R's age when 1st child born")
+data <- rename(data, 'Age'='Age of respondent')
+data <- rename(data, 'Children'='Number of children')
+data <- rename(data, 'Marital.status' = 'Marital status')
+data <- rename(data, 'ID' = 'Respondent id number')
+data <- rename(data, 'Ballot' = 'Ballot used for interview')
+```
+
+```{R}
+library('dplyr')
+library('ggplot2')
+```
+
+<h1>Question 3</h1>
+
+```{r}
+three <- data[, c(3, 4, 13)]
+married <- filter(three, Marital.status == "Married")
+notmarried <- filter(three, Marital.status != "Married")
+```
+
+```{R}
+married1 = aggregate(married$`Marital status`, by=list(married$`General happiness`), FUN=length)
+marriedandhappy <- filter(three, `Marital status` == "Married" & (`General happiness` == "Very happy" | `General happiness` == "Pretty happy"))
+marriedandnothappy <- filter(three, `Marital status` == "Married" & (`General happiness` != "Very happy" & `General happiness` != "Pretty happy"))
+
+
+
+notmarried1 = aggregate(notmarried$`Marital status`, by=list(notmarried$`General happiness`), FUN=length)
+notmarriedandhappy <- filter(three, `Marital status` != "Married" & (`General happiness` == "Very happy" | `General happiness` == "Pretty happy"))
+notmarriedandnothappy <- filter(three, `Marital status` != "Married" & (`General happiness` != "Very happy" & `General happiness` != "Pretty happy"))
+```
+
+The plots show that people who are married tend to be happier than people who are not married.
+
+
+```{R}
+p <- ggplot(married1, aes(x = Group.1, weight = x)) + geom_bar()
+p + xlab("Happiness") + ylab("Number of People") + ggtitle("Plot of Happiness for Married People")
+```
+```{R}
+p1 <- ggplot(notmarried1, aes(x = Group.1, weight = x)) + geom_bar()
+p1 + xlab("Happiness") + ylab("Number of People") + ggtitle("Plot of Happiness for Non - Married People")
+```
+
+<h1>Question 4</h1>
+
+married_df <- data %>%
+  filter(Marital.status == "Married")
+
+
+notmarried_df <- data %>%
+  filter(Marital.status != "Married")
+
+
+
+
+
+
+
+
 
