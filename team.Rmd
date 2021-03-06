@@ -45,10 +45,14 @@ data <- rename(data, 'Ballot' = 'Ballot used for interview')
 #data %>% group_by(Marital.status %>% summarise(count = n(), mean = mean(Education)), )
 data %>% group_by(Marital.status) %>% summarise(ed = mean(Education)) %>% arrange(ed)
 ```
+
+Here we can see the mean years of education arranged in a table by marital status.
+
 ```{r}
-#data %>% group_by(Marital.status) %>% summarise(ed = mean(Education)) %>% ggplot(aes(x=reorder(Marital.status, ed), weight=ed))+geom_bar(show.legend = FALSE) + xlab(aes(fill = 'Marital.status')"Marital Status") + ylab("Average Number of Years Educated")
+data %>% group_by(Marital.status) %>% summarise(ed = mean(Education)) %>% ggplot(aes(x=reorder(Marital.status, ed), weight=ed))+geom_bar(show.legend = FALSE) + xlab('Marital Status') + ylab('Average Years of Education')
 ```
 
+This bar chart shows some interesting information, displaying mean years of education for each marital status. The chart clearly show that those with no answer had the highest average schooling, which is strange and I disregarded. HOwever, those who are married had the highest average years of schooling of those who answered. On the flip side, widowed individuals had the lowest average years of education. 
 
 ### Problem 2
 
