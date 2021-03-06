@@ -226,7 +226,18 @@ data &lt;- rename(data, &#39;Marital.status&#39; = &#39;Marital status&#39;)
 data &lt;- rename(data, &#39;ID&#39; = &#39;Respondent id number&#39;)
 data &lt;- rename(data, &#39;Ballot&#39; = &#39;Ballot used for interview&#39;)
 
-#data %&gt;% group_by(Marital.status %&gt;% summarise(count = n(), mean = mean(Education)), )</code></pre>
+#data %&gt;% group_by(Marital.status %&gt;% summarise(count = n(), mean = mean(Education)), )
+data %&gt;% group_by(Marital.status) %&gt;% summarise(ed = mean(Education)) %&gt;% arrange(ed)</code></pre>
+<pre><code>## # A tibble: 6 x 2
+##   Marital.status    ed
+##   &lt;chr&gt;          &lt;dbl&gt;
+## 1 Widowed         12.2
+## 2 Never married   12.2
+## 3 Separated       12.5
+## 4 Divorced        13.3
+## 5 Married         13.7
+## 6 No answer       16</code></pre>
+<pre class="r"><code>#data %&gt;% group_by(Marital.status) %&gt;% summarise(ed = mean(Education)) %&gt;% ggplot(aes(x=reorder(Marital.status, ed), weight=ed))+geom_bar(show.legend = FALSE) + xlab(aes(fill = &#39;Marital.status&#39;)&quot;Marital Status&quot;) + ylab(&quot;Average Number of Years Educated&quot;)</code></pre>
 </div>
 <div id="problem-2" class="section level3">
 <h3>Problem 2</h3>

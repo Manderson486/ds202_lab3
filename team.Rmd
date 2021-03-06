@@ -43,7 +43,10 @@ data <- rename(data, 'ID' = 'Respondent id number')
 data <- rename(data, 'Ballot' = 'Ballot used for interview')
 
 #data %>% group_by(Marital.status %>% summarise(count = n(), mean = mean(Education)), )
-
+data %>% group_by(Marital.status) %>% summarise(ed = mean(Education)) %>% arrange(ed)
+```
+```{r}
+#data %>% group_by(Marital.status) %>% summarise(ed = mean(Education)) %>% ggplot(aes(x=reorder(Marital.status, ed), weight=ed))+geom_bar(show.legend = FALSE) + xlab(aes(fill = 'Marital.status')"Marital Status") + ylab("Average Number of Years Educated")
 ```
 
 
