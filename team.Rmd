@@ -240,6 +240,11 @@ cor(x=data$People, y= data$Parent.age)
 In comparing the year when the respondents first child was born and the number of persons in the household, we see there is very little correlation. In addition to this our graphs show that for people from each type of household the age when the first child is born follows a similar curve. In the colored chart we see very little shift in the graph based on the color of the bar, and in the grid of charts we see very little difference in the shape of the curves. In our data we see that the average age of the first born child is between 20 and 25 for all respondents. It is slightly lower for those in households with more than 6 people, but not by a large margin, and there is less data for these families as well which could impact the results. 
 
 
+####Exploring how income affects the ownership of an individual's home (i.e. rents or owns).
 
+```{r}
+data$Income <- as.numeric(data$Income)
+#data$Income <- na.omit
+data %>% group_by(Rent) %>% ggplot(aes(x=Rent))+geom_bar(show.legend = FALSE) + xlab('Property Ownership Type') + ylab('Mean Income')
 
-
+```
