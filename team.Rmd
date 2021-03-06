@@ -11,7 +11,7 @@ library(ggplot2)
 ```
 
 ## Team Document
-### Marcella Anderson, <boys put your names here>
+### Marcella Anderson, Mario Lloyd Galvao-Wilson, Justin Park
 
 Data Cleaning
 ```{r}
@@ -24,21 +24,7 @@ data <- data %>% na.omit
 ```
 
 ### Problem 1
-
-
-
-### Problem 2
-
-
-
-```{R}
-library('dplyr')
-library('ggplot2')
-```
-
-```{R}
-data <- readxl::read_xls('C:/Users/justi/Desktop/DS202/ds202_lab3/ds202_lab3/GSS.xls')
-
+```{r}
 data <- rename(data, 'Year'='Gss year for this respondent')
 data <- rename(data, 'Rent' = 'Does r own or rent home?')
 data <- rename(data, 'Happiness' = 'General happiness')
@@ -54,6 +40,39 @@ data <- rename(data, 'Children'='Number of children')
 data <- rename(data, 'Marital.status' = 'Marital status')
 data <- rename(data, 'ID' = 'Respondent id number')
 data <- rename(data, 'Ballot' = 'Ballot used for interview')
+
+#data %>% group_by(Marital.status %>% summarise(count = n(), mean = mean(Education)), )
+
+```
+
+
+### Problem 2
+
+
+
+```{R}
+library('dplyr')
+library('ggplot2')
+```
+
+```{R}
+#data <- readxl::read_xls('C:/Users/justi/Desktop/DS202/ds202_lab3/ds202_lab3/GSS.xls')
+#data <- readxl::read_xls('GSS.xls')
+#data <- rename(data, 'Year'='Gss year for this respondent')
+#data <- rename(data, 'Rent' = 'Does r own or rent home?')
+#data <- rename(data, 'Happiness' = 'General happiness')
+#data <- rename(data, 'Party' = 'Political party affiliation')
+#data <- rename(data, 'Income'='Respondents income')
+#data <- rename(data, 'People'='Number of persons in household')
+#data <- rename(data, 'Sex' = 'Respondents sex')
+#data <- rename(data, 'Major' = 'College major 1')
+#data <- rename(data, 'Education'='Highest year of school completed')
+#data <- rename(data, 'Parent.age'="R's age when 1st child born")
+#data <- rename(data, 'Age'='Age of respondent')
+#data <- rename(data, 'Children'='Number of children')
+#data <- rename(data, 'Marital.status' = 'Marital status')
+#data <- rename(data, 'ID' = 'Respondent id number')
+#data <- rename(data, 'Ballot' = 'Ballot used for interview')
 ```
 
 <h1>Question 3</h1>
