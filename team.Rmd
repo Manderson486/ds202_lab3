@@ -8,6 +8,7 @@ knitr::opts_chunk$set(echo = TRUE)
 data <- readxl::read_xls('GSS.xls')
 library(dplyr)
 library(ggplot2)
+library(tidyverse)
 ```
 
 ## Team Document
