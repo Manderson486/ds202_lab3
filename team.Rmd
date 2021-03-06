@@ -56,7 +56,11 @@ This bar chart shows some interesting information, displaying mean years of educ
 
 ### Problem 2
 
+```{r}
+smart <- data %>% group_by(Marital.status) %>% filter(Education > mean(Education))
+str(smart)
 
+```
 
 ```{R}
 library('dplyr')
