@@ -5,9 +5,10 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-dat <- readxl::read_xls('GSS.xls')
+data <- readxl::read_xls('GSS.xls')
 library(dplyr)
-library(ggplot2)
+library(tidyverse)
+
 ```
 
 ## R Markdown
@@ -15,13 +16,13 @@ cleaning the data with Mario's code
 
 ```{r}
 #the cleaning mario did
-data <- dat
-str(data)
+
 data$`Highest year of school completed` <- as.numeric(data$`Highest year of school completed`)
 data$`Age of respondent` <- as.numeric(data$`Age of respondent`)
 data$`R's age when 1st child born` <- as.numeric(data$`R's age when 1st child born`)
 data$`Number of children` <- as.numeric(data$`Number of children`)
 data <- data %>% na.omit
+
 ```
 
 ## Problem 5
