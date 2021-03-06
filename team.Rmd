@@ -188,22 +188,21 @@ ggplot(unhappy_indep_df, aes(x=Party)) + geom_bar(color="black", fill="purple")
 
 <h3>Conlusion</h3>
 <p>
-In general, there tend to be more happy people than unhappy people. Party does not seem to play a factor.
+In general, there tend to be more happy people than unhappy people. Party does not seem to play a factor.</p>
 
 
 
 
 ### Problem 5
 ```{r}
+data$MarStatFact <- factor(data$Marital.status, levels = c('Divorced','Married','Widowed','Never married','Separated', 'No answer'))
 
-data$MarStatFact <- factor(data$`Marital status`, levels = c('Divorced','Married','Widowed','Never married','Separated', 'No answer'))
-
-ggplot(data, aes(x=`Highest year of school completed`))+geom_bar() + facet_wrap(~ MarStatFact )
+ggplot(data, aes(x=Education))+geom_bar() + facet_wrap(~ MarStatFact )+xlab("Highest year of school completed")
 
 data %>% 
   group_by(MarStatFact) %>%
-  summarize(mean_edu = mean(`Highest year of school completed`,na.rm=TRUE),
-            sd_edu = sd(`Highest year of school completed`,na.rm=TRUE)) %>%
+  summarize(mean_edu = mean(Education,na.rm=TRUE),
+            sd_edu = sd(Education,na.rm=TRUE)) %>%
   arrange(mean_edu)
 ```
 
@@ -214,17 +213,17 @@ Though our graph shows similar curves of education for respondents of all marria
 #### Comparing the number of people in a household to the age when the first child is born
 ```{r}
 
-data$numPerInHouse <- factor(data$`Number of persons in household`, 1:12 )
+data$numPerInHouse <- factor(data$People, 1:12 )
 
-ggplot(data, aes(x=`R's age when 1st child born`, fill = numPerInHouse))+geom_bar(color = 'black')+xlab("Age when First Child was Born")+ylab("count")+labs(fill = "Number of People in Household")+ggtitle("Age when First Child is Born by Number of People in Household")
+ggplot(data, aes(x=Parent.age, fill = numPerInHouse))+geom_bar(color = 'black')+xlab("Age when First Child was Born")+ylab("count")+labs(fill = "Number of People in Household")+ggtitle("Age when First Child is Born by Number of People in Household")
 
-ggplot(data, aes(x=`R's age when 1st child born`))+geom_bar() +facet_wrap(~ `Number of persons in household`, scales = 'free_y')+ggtitle("Age when First Child was Born Separated by Number of People in Household")
+ggplot(data, aes(x=Parent.age))+geom_bar() +facet_wrap(~ People, scales = 'free_y')+ggtitle("Age when First Child was Born Separated by Number of People in Household")
 
 data %>%
   group_by(numPerInHouse) %>%
-  summarize(mean_child = mean(`R's age when 1st child born`,na.rm=TRUE),
-            sd_child = sd(`R's age when 1st child born`,na.rm=TRUE))
-cor(x=data$`Number of persons in household`, y= data$`R's age when 1st child born`)
+  summarize(mean_child = mean(Parent.age,na.rm=TRUE),
+            sd_child = sd(Parent.age,na.rm=TRUE))
+cor(x=data$People, y= data$Parent.age)
 ```
 In comparing the year when the respondents first child was born and the number of persons in the household, we see there is very little correlation. In addition to this our graphs show that for people from each type of household the age when the first child is born follows a similar curve. In the colored chart we see very little shift in the graph based on the color of the bar, and in the grid of charts we see very little difference in the shape of the curves. In our data we see that the average age of the first born child is between 20 and 25 for all respondents. It is slightly lower for those in households with more than 6 people, but not by a large margin, and there is less data for these families as well which could impact the results. 
 
