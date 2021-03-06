@@ -67,25 +67,6 @@ library('dplyr')
 library('ggplot2')
 ```
 
-```{R}
-#data <- readxl::read_xls('C:/Users/justi/Desktop/DS202/ds202_lab3/ds202_lab3/GSS.xls')
-#data <- readxl::read_xls('GSS.xls')
-#data <- rename(data, 'Year'='Gss year for this respondent')
-#data <- rename(data, 'Rent' = 'Does r own or rent home?')
-#data <- rename(data, 'Happiness' = 'General happiness')
-#data <- rename(data, 'Party' = 'Political party affiliation')
-#data <- rename(data, 'Income'='Respondents income')
-#data <- rename(data, 'People'='Number of persons in household')
-#data <- rename(data, 'Sex' = 'Respondents sex')
-#data <- rename(data, 'Major' = 'College major 1')
-#data <- rename(data, 'Education'='Highest year of school completed')
-#data <- rename(data, 'Parent.age'="R's age when 1st child born")
-#data <- rename(data, 'Age'='Age of respondent')
-#data <- rename(data, 'Children'='Number of children')
-#data <- rename(data, 'Marital.status' = 'Marital status')
-#data <- rename(data, 'ID' = 'Respondent id number')
-#data <- rename(data, 'Ballot' = 'Ballot used for interview')
-```
 
 <h1>Question 3</h1>
 
@@ -240,11 +221,13 @@ cor(x=data$People, y= data$Parent.age)
 In comparing the year when the respondents first child was born and the number of persons in the household, we see there is very little correlation. In addition to this our graphs show that for people from each type of household the age when the first child is born follows a similar curve. In the colored chart we see very little shift in the graph based on the color of the bar, and in the grid of charts we see very little difference in the shape of the curves. In our data we see that the average age of the first born child is between 20 and 25 for all respondents. It is slightly lower for those in households with more than 6 people, but not by a large margin, and there is less data for these families as well which could impact the results. 
 
 
-####Exploring how income affects the ownership of an individual's home (i.e. rents or owns).
+
+#### Exploring how income affects the ownership of an individual's home (i.e. rents or owns).
 
 ```{r}
-data$Income <- as.numeric(data$Income)
-#data$Income <- na.omit
-data %>% group_by(Rent) %>% ggplot(aes(x=Rent))+geom_bar(show.legend = FALSE) + xlab('Property Ownership Type') + ylab('Mean Income')
+
+ggplot(data, aes(x = Rent)) + geom_bar() + coord_flip() + facet_wrap( ~ Income) + xlab('Number of Individuals') + ylab('Categotry of Home Ownership') + ggtitle('The Number of Individuals in Each Income Bracket and Housing')
 
 ```
+
+In this survey there is a lot of refusal to answer, but nonetheless we get some meaningful analysis. By looking at the bar chart displaying the level of property ownership of individuals in different income brackets we see that those who make $250,000 or more own or are in the process of buying their home. Perhaps more interesting is that even in the low income levels, owning or buying a home is still most favorable. This makes sense because it is a commonly held belief that property is the best investment, and property can be passed down through generations. 
